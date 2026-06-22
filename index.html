@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Reports Walkthrough — CleverProfits</title>
+<meta name="theme-color" content="#040B4D" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-royal-blue: #040B4D;
+    --color-electric-blue: #2605EF;
+    --color-electric-blue-hover: #1E04C7;
+    --color-dark-navy: #18197D;
+    --color-navy: #1508AC;
+    --color-white: #FFFFFF;
+    --color-grey: #D6D6D6;
+    --color-light-grey: #E7E7E7;
+    --color-background: #F8F8FC;
+    --color-background-alt: #F0F0F8;
+    --color-surface-subtle: #FAFAFA;
+    --color-success: #059669;
+    --color-success-bg: rgba(16,185,129,0.10);
+    --color-success-border: #10B981;
+    --color-warning: #B45309;
+    --color-warning-bg: rgba(245,158,11,0.10);
+    --color-warning-border: #F59E0B;
+    --color-error: #DC2626;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 3px rgba(4,11,77,.08), 0 1px 2px rgba(4,11,77,.04);
+    --shadow-md: 0 4px 12px rgba(4,11,77,.12), 0 2px 6px rgba(4,11,77,.06);
+    --shadow-lg: 0 12px 32px rgba(4,11,77,.16), 0 4px 12px rgba(4,11,77,.08);
+
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+
+    --topbar-h: 56px;
+    --sidebar-w: 280px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; }
+  body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-royal-blue);
+    background: var(--color-background);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Topbar ===== */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--topbar-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    background: rgba(248,248,252,0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-light-grey);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  .topbar-dot {
+    width: 32px; height: 32px; border-radius: var(--radius-full);
+    background: var(--color-electric-blue);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--color-white); font-weight: 700; font-size: 11px;
+  }
+  .topbar-title {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.95rem;
+    color: var(--color-royal-blue);
+  }
+  .topbar-progress {
+    font-size: 13px; color: rgba(4,11,77,0.55); font-weight: 500;
+  }
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 4px; color: var(--color-royal-blue);
+  }
+
+  /* ===== Layout ===== */
+  .layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    min-height: 100vh;
+    padding-top: var(--topbar-h);
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar {
+    position: fixed; top: var(--topbar-h); left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--color-white);
+    border-right: 1px solid var(--color-light-grey);
+    overflow-y: auto;
+    padding: 16px 0;
+    z-index: 50;
+  }
+  .sidebar-module {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px; font-weight: 500;
+    color: rgba(4,11,77,0.6);
+    transition: all var(--transition-fast);
+    border-left: 3px solid transparent;
+  }
+  .sidebar-module:hover {
+    background: var(--color-background);
+    color: var(--color-royal-blue);
+  }
+  .sidebar-module.active {
+    background: rgba(38,5,239,0.06);
+    color: var(--color-electric-blue);
+    border-left-color: var(--color-electric-blue);
+    font-weight: 600;
+  }
+  .sidebar-module .mod-icon { font-size: 18px; width: 24px; text-align: center; }
+  .sidebar-module .mod-check {
+    margin-left: auto; font-size: 14px; color: var(--color-success); opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+  .sidebar-module.visited .mod-check { opacity: 1; }
+
+  /* ===== Main Content ===== */
+  .main {
+    padding: 32px 40px 100px;
+    max-width: 1100px;
+  }
+  .step-eyebrow {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--color-electric-blue);
+    margin-bottom: 6px;
+  }
+  .step-title {
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+    color: var(--color-royal-blue); margin-bottom: 12px;
+  }
+  .step-description {
+    font-size: 15px; line-height: 1.7; color: rgba(4,11,77,0.75);
+    max-width: 720px; margin-bottom: 20px;
+  }
+  .step-note {
+    background: var(--color-warning-bg);
+    border: 1px solid var(--color-warning-border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    font-size: 13px; line-height: 1.6;
+    color: var(--color-warning);
+    margin-bottom: 20px;
+    max-width: 720px;
+  }
+  .step-note::before { content: 'Tip: '; font-weight: 600; }
+
+  /* ===== Iframe ===== */
+  .iframe-container {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-light-grey);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    background: var(--color-white);
+    margin-bottom: 24px;
+  }
+  .iframe-container iframe {
+    width: 100%; height: 70vh; border: none; display: block;
+  }
+  .iframe-placeholder {
+    height: 70vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+    color: rgba(4,11,77,0.4); font-size: 14px;
+  }
+  .iframe-placeholder .placeholder-icon { font-size: 48px; opacity: 0.3; }
+
+  /* ===== Navigation ===== */
+  .step-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-light-grey);
+  }
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: none;
+  }
+  .nav-btn.prev {
+    background: var(--color-white);
+    color: var(--color-royal-blue);
+    border: 1px solid var(--color-light-grey);
+  }
+  .nav-btn.prev:hover { background: var(--color-background); }
+  .nav-btn.next {
+    background: var(--color-electric-blue);
+    color: var(--color-white);
+  }
+  .nav-btn.next:hover { background: var(--color-electric-blue-hover); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .step-counter {
+    font-size: 13px; color: rgba(4,11,77,0.45); font-weight: 500;
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    .layout { grid-template-columns: 1fr; }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform var(--transition-base);
+      z-index: 90;
+      box-shadow: var(--shadow-lg);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 80;
+      background: rgba(0,0,0,0.3);
+    }
+    .sidebar-backdrop.open { display: block; }
+    .main { padding: 24px 16px 100px; }
+    .step-title { font-size: 1.3rem; }
+    .iframe-container iframe { height: 50vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="topbar-dot">CP</span>
+    <span class="topbar-title">Reports Walkthrough</span>
+  </div>
+  <span class="topbar-progress" id="topbar-progress"></span>
+</header>
+
+<!-- Sidebar backdrop (mobile) -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<!-- Layout -->
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main" id="main-content"></main>
+</div>
+
+<script src="walkthrough-data.js"></script>
+<script>
+(function () {
+  const sidebar = document.getElementById('sidebar');
+  const main = document.getElementById('main-content');
+  const progress = document.getElementById('topbar-progress');
+  const hamburger = document.getElementById('hamburger');
+  const backdrop = document.getElementById('sidebar-backdrop');
+
+  let currentModule = 0;
+  let currentStep = 0;
+  const visited = new Set();
+
+  // Total step count
+  const totalSteps = WALKTHROUGH_MODULES.reduce((sum, m) => sum + m.steps.length, 0);
+
+  function globalStepIndex() {
+    let idx = 0;
+    for (let i = 0; i < currentModule; i++) idx += WALKTHROUGH_MODULES[i].steps.length;
+    return idx + currentStep;
+  }
+
+  function buildSidebar() {
+    sidebar.innerHTML = WALKTHROUGH_MODULES.map((mod, i) => `
+      <div class="sidebar-module${i === currentModule ? ' active' : ''}${visited.has(i) ? ' visited' : ''}"
+           data-module="${i}">
+        <span class="mod-icon">${mod.icon}</span>
+        <span>${mod.title}</span>
+        <span class="mod-check">\u2713</span>
+      </div>
+    `).join('');
+
+    sidebar.querySelectorAll('.sidebar-module').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.module);
+        navigateTo(idx, 0);
+        closeSidebar();
+      });
+    });
+  }
+
+  function renderStep() {
+    const mod = WALKTHROUGH_MODULES[currentModule];
+    const step = mod.steps[currentStep];
+    const stepNum = currentStep + 1;
+    const stepTotal = mod.steps.length;
+
+    visited.add(currentModule);
+
+    // Progress
+    progress.textContent = `Step ${globalStepIndex() + 1} of ${totalSteps}`;
+
+    // Main content
+    let iframeHTML;
+    if (step.iframe) {
+      iframeHTML = `
+        <div class="iframe-container">
+          <iframe src="${step.iframe}" loading="lazy" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        </div>`;
+    } else {
+      iframeHTML = `
+        <div class="iframe-container">
+          <div class="iframe-placeholder">
+            <div class="placeholder-icon">${mod.icon}</div>
+            <div>No live preview for this step — read the guide above.</div>
+          </div>
+        </div>`;
+    }
+
+    const noteHTML = step.note
+      ? `<div class="step-note">${step.note}</div>`
+      : '';
+
+    const isFirst = currentModule === 0 && currentStep === 0;
+    const isLast = currentModule === WALKTHROUGH_MODULES.length - 1 && currentStep === mod.steps.length - 1;
+
+    main.innerHTML = `
+      <div class="step-eyebrow">${mod.title} &mdash; Step ${stepNum} of ${stepTotal}</div>
+      <h1 class="step-title">${step.title}</h1>
+      <div class="step-description">${step.description}</div>
+      ${noteHTML}
+      ${iframeHTML}
+      <div class="step-nav">
+        <button class="nav-btn prev" id="btn-prev" ${isFirst ? 'disabled' : ''}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="10 12 6 8 10 4"/></svg>
+          Previous
+        </button>
+        <span class="step-counter">${stepNum} / ${stepTotal}</span>
+        <button class="nav-btn next" id="btn-next" ${isLast ? 'disabled' : ''}>
+          Next
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 4 10 8 6 12"/></svg>
+        </button>
+      </div>
+    `;
+
+    document.getElementById('btn-prev').addEventListener('click', goPrev);
+    document.getElementById('btn-next').addEventListener('click', goNext);
+
+    buildSidebar();
+    updateHash();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function navigateTo(modIdx, stepIdx) {
+    currentModule = modIdx;
+    currentStep = stepIdx;
+    renderStep();
+  }
+
+  function goNext() {
+    const mod = WALKTHROUGH_MODULES[currentModule];
+    if (currentStep < mod.steps.length - 1) {
+      currentStep++;
+    } else if (currentModule < WALKTHROUGH_MODULES.length - 1) {
+      currentModule++;
+      currentStep = 0;
+    }
+    renderStep();
+  }
+
+  function goPrev() {
+    if (currentStep > 0) {
+      currentStep--;
+    } else if (currentModule > 0) {
+      currentModule--;
+      currentStep = WALKTHROUGH_MODULES[currentModule].steps.length - 1;
+    }
+    renderStep();
+  }
+
+  function updateHash() {
+    const mod = WALKTHROUGH_MODULES[currentModule];
+    history.replaceState(null, '', `#${mod.id}/${currentStep}`);
+  }
+
+  function readHash() {
+    const hash = location.hash.replace('#', '');
+    if (!hash) return;
+    const [modId, stepStr] = hash.split('/');
+    const modIdx = WALKTHROUGH_MODULES.findIndex(m => m.id === modId);
+    if (modIdx >= 0) {
+      currentModule = modIdx;
+      const s = parseInt(stepStr);
+      if (!isNaN(s) && s >= 0 && s < WALKTHROUGH_MODULES[modIdx].steps.length) {
+        currentStep = s;
+      }
+    }
+  }
+
+  // Mobile sidebar
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('open');
+  }
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('open');
+  });
+  backdrop.addEventListener('click', closeSidebar);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goNext(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goPrev(); }
+  });
+
+  // Init
+  readHash();
+  renderStep();
+})();
+</script>
+</body>
+</html>
