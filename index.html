@@ -314,7 +314,12 @@
 
     // Main content
     let iframeHTML;
-    if (step.iframe) {
+    if (step.image) {
+      iframeHTML = `
+        <div class="iframe-container">
+          <img src="${step.image}" alt="${step.title}" style="width:100%;display:block;" />
+        </div>`;
+    } else if (step.iframe) {
       iframeHTML = `
         <div class="iframe-container">
           <iframe src="${step.iframe}" loading="lazy" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>

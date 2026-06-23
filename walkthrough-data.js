@@ -12,6 +12,7 @@ const WALKTHROUGH_MODULES = [
         title: 'What is Reports?',
         description: 'CleverProfits Reports is the team\'s financial reporting dashboard. It pulls data from QuickBooks Online, applies our proprietary Chart of Accounts mapping, and generates monthly financial playbooks for every client. This walkthrough will guide you through each module using a live demo client called <strong>Training Ground</strong>.',
         iframe: null,
+        image: 'monthly-tab-preview.png',
       },
       {
         id: 'welcome-login',
