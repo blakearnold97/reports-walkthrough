@@ -17,9 +17,11 @@ const WALKTHROUGH_MODULES = [
       {
         id: 'welcome-login',
         title: 'How to Log In',
-        description: 'Reports uses Google sign-in. Click the button below to open the login page. <strong>You must log in before the embedded previews in this walkthrough will work.</strong> After logging in, come back to this tab and continue.',
-        iframe: `${PROD_BASE}/login`,
-        note: 'Log into Reports first in a separate tab. The iframe previews in this walkthrough share your browser session, so you only need to log in once.',
+        description: 'Reports uses email-based sign-in. Enter your CleverProfits email, receive a code, and you\'re in. <strong>You must log in before the embedded previews in this walkthrough will work.</strong> Click the button below to open the login page in a new tab, then come back here and continue.',
+        iframe: null,
+        link: `${PROD_BASE}/login`,
+        linkLabel: 'Open Reports Login',
+        note: 'Log into Reports first in the new tab. The iframe previews in this walkthrough share your browser session, so you only need to log in once.',
       },
       {
         id: 'welcome-nav',

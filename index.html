@@ -319,6 +319,14 @@
         <div class="iframe-container">
           <img src="${step.image}" alt="${step.title}" style="width:100%;display:block;" />
         </div>`;
+    } else if (step.link) {
+      iframeHTML = `
+        <div class="iframe-container">
+          <div class="iframe-placeholder">
+            <div class="placeholder-icon">${mod.icon}</div>
+            <a href="${step.link}" target="_blank" rel="noopener" class="nav-btn next" style="text-decoration:none;margin-top:12px;">${step.linkLabel || 'Open in New Tab'} &#8599;</a>
+          </div>
+        </div>`;
     } else if (step.iframe) {
       iframeHTML = `
         <div class="iframe-container">
