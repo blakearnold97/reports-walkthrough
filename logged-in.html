@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Logged In — Reports Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: #F8F8FC;
+    color: #040B4D;
+  }
+  .card {
+    text-align: center;
+    background: #fff;
+    border-radius: 16px;
+    padding: 48px 40px;
+    box-shadow: 0 4px 12px rgba(4,11,77,.12), 0 2px 6px rgba(4,11,77,.06);
+    max-width: 480px;
+  }
+  .check {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(16,185,129,0.10);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  p {
+    font-size: 15px; line-height: 1.6;
+    color: rgba(4,11,77,0.65);
+    margin-bottom: 24px;
+  }
+  a.btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px;
+    border-radius: 9999px;
+    background: #2605EF;
+    color: #fff;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: background 150ms ease;
+  }
+  a.btn:hover { background: #1E04C7; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="check">&#10003;</div>
+  <h1>You're connected!</h1>
+  <p>You've successfully logged into Reports. Head back to the walkthrough to continue — all the live previews will now load with your session.</p>
+  <a class="btn" href="/#welcome/2">Back to Walkthrough &rarr;</a>
+</div>
+</body>
+</html>

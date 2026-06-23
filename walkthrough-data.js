@@ -19,7 +19,7 @@ const WALKTHROUGH_MODULES = [
         title: 'How to Log In',
         description: 'Reports uses email-based sign-in. Enter your CleverProfits email, receive a code, and you\'re in. <strong>You must log in before the embedded previews in this walkthrough will work.</strong> Click the button below to open the login page in a new tab, then come back here and continue.',
         iframe: null,
-        link: `${PROD_BASE}/login`,
+        link: `${PROD_BASE}/login?callbackUrl=${encodeURIComponent('https://web-production-19918.up.railway.app/logged-in.html')}`,
         linkLabel: 'Open Reports Login',
         note: 'Log into Reports first in the new tab. The iframe previews in this walkthrough share your browser session, so you only need to log in once.',
       },
